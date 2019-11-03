@@ -24,7 +24,7 @@ Hover & Select
 
 ### Screencast
 
-![VSCode Inline Units Conversion Extension](https://gph.is/g/ZrndR9d)
+![VSCode Inline Units Conversion Extension](https://media.giphy.com/media/RfA4OqrypM3BR4fU1s/giphy.gif)
 
 ### License
 
