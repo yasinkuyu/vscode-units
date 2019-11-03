@@ -3,7 +3,7 @@
 	"publisher": "yasinkuyu",
 	"displayName": "VSCode Units",
 	"description": "VSCode Inline Units Conversion Extension (px to em /em to px etc.)",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"engines": {
 		"vscode": "^1.39.0"
 	},
