@@ -1,5 +1,6 @@
 {
 	"name": "vscode-units",
+	"publisher": "yasinkuyu",
 	"displayName": "VSCode Units",
 	"description": "VSCode Inline Units Conversion Extension (px to em /em to px etc.)",
 	"version": "0.0.1",
@@ -9,15 +10,27 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onCommand:extension.helloWorld"
-	],
+	"icon": "icon.png",
 	"main": "./extension.js",
+	"license": "MIT",
+	"repository": "https://github.com/yasinkuyu/vscode-units",
+	"activationEvents": [
+		"*"
+	],
 	"contributes": {
-		"commands": [
+		"configuration": {
+			"type": "object",
+			"title": "VsCodeUnits",
+			"properties": {
+				"vscodeunits.endianness": {
+					"type": "boolean",
+					"default": true
+				}
+			}
+		},
+		"languages": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"id": "vscodeunits"
 			}
 		]
 	},

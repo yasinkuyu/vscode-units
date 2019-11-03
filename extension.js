@@ -1,37 +1,77 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
+'use strict';
+// @yasinkuyu
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+Object.defineProperty(exports, "__esModule", { value: true });
 
-/**
- * @param {vscode.ExtensionContext} context
- */
+const vscode = require("vscode");
+const utils = require("./utils");
+
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-units" is now active!');
+    var current_position = [];
+  
+    var disposableOpenUrl = vscode.commands.registerCommand('extension.convert', (val) => {
+        
+        var editor = vscode.window.activeTextEditor;
+       
+        editor.edit(editBuilder => {
+            editBuilder.replace(current_position, val);
+        });
+ 
+        vscode.window.showInformationMessage('Converted: ' + val);
+    });
+    
+    var hover = vscode.languages.registerHoverProvider({ scheme: '*', language: '*' }, {
+        provideHover(document, position, token) {
+			
+			var input = document.getText(document.getWordRangeAtPosition(position));
+            var range = document.getWordRangeAtPosition(position);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+            current_position = range;
+            
+            // https://github.com/yasinkuyu/brackets-units
+            var UNITS_REGEX = /(\d*\.?\d+)\s?(px|em|rem|ex|%|in|cm|mm|pt|pc+)/igm;
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
-	});
+            var units = new RegExp(UNITS_REGEX);
+            
+            var match = units.exec(input);
+         
+			if (match) {
 
-	context.subscriptions.push(disposable);
+                var value = match[1];
+                var unit = match[2];
+
+                let message = 'VSCode Units Convert: ' +
+                    ' **' + input + '** -> ' +
+                    ' ' + '\n' +
+                    '';
+ 
+                    const item = new vscode.MarkdownString(message);
+                    item.isTrusted = true;
+
+                    var list = ['px','rem','%','in','cm','mm','pt','pc'];
+
+                    list.forEach(key => {
+
+                        var val = utils.convert(value, unit, key);
+                        item.appendMarkdown(' ['+ val + '](command:extension.convert?'+ encodeURI(JSON.stringify(val)) +')   \n');
+                        
+                    });
+
+                    item.appendMarkdown('\n\n @yasinkuyu ');
+
+                    return new vscode.Hover(item);
+                }
+
+                context.subscriptions.push(disposableOpenUrl);
+            
+        }
+    });
+
+    context.subscriptions.push(hover);
 }
+
 exports.activate = activate;
-
-// this method is called when your extension is deactivated
-function deactivate() {}
-
-module.exports = {
-	activate,
-	deactivate
-}
+function deactivate() { }
+exports.deactivate = deactivate;
+//# sourceMappingURL=extension.js.map
