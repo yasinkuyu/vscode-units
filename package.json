@@ -10,6 +10,12 @@
 	"categories": [
 		"Other"
 	],
+	"keywords": [
+		"unit",
+		"converter",
+		"px-to-em",
+		"cm-to-mm"
+	],
 	"icon": "icon.png",
 	"main": "extension.js",
 	"license": "MIT",
@@ -47,5 +53,10 @@
 		"mocha": "^6.2.2",
 		"typescript": "^3.6.4",
 		"vscode-test": "^1.2.2"
+	},
+	"__metadata": {
+		"id": "4b5dbfda-70cf-4ae8-b7cf-9d09a53524b6",
+		"publisherDisplayName": "Yasin Kuyu",
+		"publisherId": "e8854354-f521-4671-b02a-85ac604d04f4"
 	}
 }
